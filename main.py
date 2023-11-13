@@ -6,6 +6,11 @@ url = "https://foodpro.ucr.edu/foodpro/shortmenu.asp?sName=University%20of%20Cal
 page = requests.get(url)
 soup = BeautifulSoup(page.text, features="html.parser")
 
+date = soup.find_all('div', class_ = "shortmenutitle")
+date = [title.text.strip() for title in date]
+
+##Everything above this line is good!
+
 breakfast_table = soup.find_all('table')[4]
 breakfast_menu = breakfast_table.find_all('div', class_ = "shortmenurecipes")
 breakfast_menu_names = [title.text.strip() for title in breakfast_menu]
@@ -20,8 +25,10 @@ dinner_menu_names = [title.text.strip() for title in dinner_menu]
 
 
 
-for i in breakfast_menu_names:
-    print(i)
+#Execution line:
+
+
+
 
 
 
