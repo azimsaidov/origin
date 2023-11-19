@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Highlander Health</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Kanit:600,100|Inter:700');
+
+        .menu-style {
+            padding: 20px;
+            font-family: Kanit;
+        }
+        
+    </style>
+    </head>
+
+    <body style="overflow: hidden;">
+        <div style="width: 100vw; height: 100vh; position: absolute; background-image: url(static/background.png)">
+            <div style="width: 47%; height: 35%; left: 26%; top: 39%; position: absolute; background: white; border-radius: 30px; border: 2px black solid; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <!-- Your HTML -->
+            <div id="menuDisplay"></div>
+<div id="inputFields">
+                 <!-- Weight Input -->
+                 <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <input id="weightInput" placeholder="Weight (in pounds)" style="font-family: Kanit; height: 40px; border-radius: 5px; border: 1px solid #ccc; padding: 5px;">
+                </div>
+            
+                <!-- Height Input -->
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <input id="heightInput" placeholder="Height (in inches)" style="font-family: Kanit; height: 40px; border-radius: 5px; border: 1px solid #ccc; padding: 5px;">
+                </div>
+            
+                <!-- Space for String Input -->
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <textarea id="dietaryPreferences" placeholder="Enter you dietary goals here" style="font-family: Kanit; height: 60px; width: 300px; border-radius: 5px; border: 1px solid #ccc; padding: 5px; margin-bottom: 5px;"></textarea>
+                </div>
+
+      </div>
+
+                <div style="font-family: Kanit;" id="menuItems"></div>
+
+
+            </div>
+            <div style="width: 48%; height: 9%; left: 26%; top: 23%; position: absolute; text-align: center; color: white; font-size: 2.5vh; font-family: Kanit; font-weight: 300; word-wrap: break-word">Highlander Health is committed to assisting you in achieving your nutritional objectives. Please input your height, weight, dietary preferences, and any health goals. Our algorithm will provide you a personalized meal plan for today. Estimated processing time: 30 seconds</div>
+            <div style="width: 92%; height: 12%; left: 8%; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)"></div>
+            <div style="width: 45%; height: 8%; left: 10%; top: 1%; position: absolute; color: #2763B7; font-size: 7vh; font-family: Kanit; font-weight: 600; letter-spacing: 5.60px; word-wrap: break-word">Highlander Health</div>
+            <div style="width: 50%; height: 15%; left: 25%; top: 23%; position: absolute; mix-blend-mode: soft-light; background: #D9D9D9; border-radius: 30px;"></div>
+            <div style="width: 100%; height: 1%; left: 0px; top: 89%; position: absolute; mix-blend-mode: soft-light; background: #D9D9D9"></div>
+            <div style="width: 87%; height: 8%; left: 7%; top: 84%; position: absolute; text-align: center; color: white; font-size: 6vh; font-family: Kanit; font-weight: 300; letter-spacing: 35.40px; word-wrap: break-word">Wellness starts here</div>
+            <img style="width: 6%; height: 10%; left: 93%; top: 1%; position: absolute" src="static/UC_Riverside_seal.svg.png" />
+            <img style="width: 7.5%; height: 12%; left: 0px; top: 1px; position: absolute" src="static/bear.jpg" />
+            <button onclick="" style="width: 16%; height: 5%; left: 42%; top: 74%; position: absolute; mix-blend-mode: hard-light; background: #B8D2F7; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 500px; border: none; outline: none;">
+                <div id="getMealPlanBtn" style="cursor: pointer; width: 100%; height: 100%; text-align: center; color: white; font-size: 2vh; font-family: Kanit; font-weight: 700; display: flex; align-items: center; justify-content: center;">
+                    Get Meal Plan
+                </div>
+            </button>
+         </div>
+
+
+         <script>
+            document.getElementById('getMealPlanBtn').addEventListener('click', function() {
+    const weight = document.getElementById('weightInput').value;
+    const height = document.getElementById('heightInput').value;
+    const dietPlan = document.getElementById('dietaryPreferences').value;
+
+    // AJAX request to Flask backend
+    fetch('/generate_meal_plan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ weight, height, dietPlan }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('menuDisplay').innerHTML = data;
+        menuDisplay.classList.add('menu-style');  // Add the class
+        document.getElementById('inputFields').style.display = 'none';
+ // Update HTML with generated meal plan
+    })
+    .catch(error => console.error('Error:', error));
+});
+        </script>
+    
+</body>
+  </html>
